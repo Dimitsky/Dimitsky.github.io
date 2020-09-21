@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div>
+      
+    </div>
+    <script>
+      let div = document.querySelector('div');
+      
+      window.onresize = e => {
+        let {clientWidth: w, clientHeight: h} = document.documentElement;
+        div.innerHTML = `Width: ${w}, Height: ${h}`;
+      }
+    </script>
+  </body>
+</html>
+
