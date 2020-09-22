@@ -1,0 +1,15 @@
+.wrapper {
+  flex-flow: column wrap;
+  margin: auto;
+  max-width: auto;
+}
+
+.wrapper .timer {
+  margin: 1rem 0 0 0;
+  position: static;
+}
+
+.timer p {
+  position: static;
+  transform: none;
+}

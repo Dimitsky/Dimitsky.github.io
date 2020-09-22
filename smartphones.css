@@ -1,0 +1,14 @@
+.wrapper {
+  display: block;
+}
+
+.wrapper .timer {
+  border-top: 2px solid #f3f3f3;
+  margin: 0;
+  position: static;
+}
+
+.wrapper .results {
+  border-top: 2px solid #f3f3f3;
+  margin: 0;
+}
