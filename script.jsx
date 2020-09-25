@@ -118,12 +118,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = {
-      correct: 0
-    };
+    this.state = {};
     this.operators = [
       '===',
-      '=='
+      '==',
+      '<=',
+      '>=',
+      '<',
+      '>'
     ];
     this.operands = [
       undefined,
@@ -134,9 +136,12 @@ class App extends React.Component {
       0,
       '',
       1,
-      '0'
+      '0',
+      'orange',
+      'lime'
     ];
     this.expressions = [];  //Хранит все выражения
+    this.correct = 0; //Хранит количество правильных ответов
     this.statusApp = 'start'; //Определяет состояние приложения: 'start', 'continue', 'end'
     this.handleButtonTrue = this.handleButtonTrue.bind(this); //привязать контекст обработчиков событий к компоненту
     this.handleButtonFalse = this.handleButtonFalse.bind(this); //
@@ -154,7 +159,7 @@ class App extends React.Component {
     let isCorrectUserAnswer = false;
 
     if(this.state.result === true) {
-      this.setState({correct: this.state.correct + 1});
+      this.correct++;
       isCorrectUserAnswer = true;
     }
 
@@ -167,7 +172,7 @@ class App extends React.Component {
     let isCorrectUserAnswer = false;
 
     if(this.state.result === false) {
-      this.setState({correct: this.state.correct + 1});
+      this.correct++
       isCorrectUserAnswer = true;
     }
 
@@ -179,7 +184,8 @@ class App extends React.Component {
   //Запускает тренажер
   handleButtonStart(e) {
     this.statusApp = 'continue';
-    this.setState({correct: 0});  //сбросить счетчик правильных ответов
+    this.correct = 0;  //сбросить счетчик правильных ответов
+    this.expressions = [];
     this.makeNewExpression();
 
     e.preventDefault(); //отменить отправку формы
@@ -288,7 +294,7 @@ class App extends React.Component {
     );
     //хранит элемент-React который будет выведен в конце работы приложения
     let endApp = (
-      <Goodbuy handler={this.handleButtonStart} correct={this.state.correct} expressions={this.expressions} />
+      <Goodbuy handler={this.handleButtonStart} correct={this.correct} expressions={this.expressions} />
     );
     
     switch(this.statusApp) {

@@ -93,12 +93,12 @@ function Goodbuy(props) {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      correct: 0
-    };
-    this.operators = ['===', '=='];
-    this.operands = [undefined, null, NaN, false, true, 0, '', 1, '0'];
+    this.state = {};
+    this.operators = ['===', '==', '<=', '>=', '<', '>'];
+    this.operands = [undefined, null, NaN, false, true, 0, '', 1, '0', 'orange', 'lime'];
     this.expressions = []; //Хранит все выражения
+
+    this.correct = 0; //Хранит количество правильных ответов
 
     this.statusApp = 'start'; //Определяет состояние приложения: 'start', 'continue', 'end'
 
@@ -121,9 +121,7 @@ class App extends React.Component {
     let isCorrectUserAnswer = false;
 
     if (this.state.result === true) {
-      this.setState({
-        correct: this.state.correct + 1
-      });
+      this.correct++;
       isCorrectUserAnswer = true;
     }
 
@@ -136,9 +134,7 @@ class App extends React.Component {
     let isCorrectUserAnswer = false;
 
     if (this.state.result === false) {
-      this.setState({
-        correct: this.state.correct + 1
-      });
+      this.correct++;
       isCorrectUserAnswer = true;
     }
 
@@ -150,10 +146,9 @@ class App extends React.Component {
 
   handleButtonStart(e) {
     this.statusApp = 'continue';
-    this.setState({
-      correct: 0
-    }); //сбросить счетчик правильных ответов
+    this.correct = 0; //сбросить счетчик правильных ответов
 
+    this.expressions = [];
     this.makeNewExpression();
     e.preventDefault(); //отменить отправку формы
   } //=====  Methods  =====
@@ -265,12 +260,12 @@ class App extends React.Component {
       className: "timer"
     }, /*#__PURE__*/React.createElement(Timer, {
       end: this.end,
-      timerSeconds: "30"
+      timerSeconds: "5"
     }))); //хранит элемент-React который будет выведен в конце работы приложения
 
     let endApp = /*#__PURE__*/React.createElement(Goodbuy, {
       handler: this.handleButtonStart,
-      correct: this.state.correct,
+      correct: this.correct,
       expressions: this.expressions
     });
 
