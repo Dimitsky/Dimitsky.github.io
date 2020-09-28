@@ -15,8 +15,7 @@ body {
 
 .wrapper {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  flex-wrap: wrap;
   margin: 1rem auto;
   max-width: 900px;
 }
@@ -76,16 +75,16 @@ h2 {
 .userAnswer {
   text-align: left;
 }
+
 form {
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
 button {
   background: #6c6c6c;
   border: 2px solid #f3f3f3;
   color: #f3f3f3;
-  font: 400 .8rem/1.2 sans-serif;
+  font: 400 1rem/1.2 sans-serif;
   flex: 0 0 4rem;
   letter-spacing: .02rem;
   outline: none;
@@ -135,4 +134,22 @@ button:active {
 
 .incorrect {
   background: #d9534f;
+}
+
+/*  */
+.wrapper label {
+  margin-left: .2rem;
+}
+
+.wrapper select{
+  margin-top: 0;
+}
+
+.wrapper select:nth-child(n + 2) {
+  margin-left: 1rem;
+}
+
+.wrapper select,
+.wrapper label {
+  font-size: inherit;
 }

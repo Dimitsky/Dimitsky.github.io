@@ -7,35 +7,21 @@ class Timer extends React.Component {
     let timerSeconds = Number(this.props.timerSeconds);
     this.state = {
       timerSeconds: timerSeconds, //Количество секунд до окончания
-      timerString: this.getTimerString(timerSeconds), //Секунды в формате hh:mm:ss
+      timerString: this.toHHMMSS(timerSeconds), //Секунды в формате hh:mm:ss
       controlBtn: 'Start',  //
       correctAnswers: this.props.correntAnswers || 0  //Правильные ответы
     }
     this.startTimer();
   }
   //Принимает секунды. Возвращает время в формате hh:mm:ss
-  getTimerString(s) {
-    if(s > 60) {
-      let seconds = s % 60;
-      let minutes = Math.floor(s / 60);
-      let hours = Math.floor(minutes / 60);
-  
-      if(!hours)  hours = '00:';
-      else if(hours < 10) hours = '0' + hours + ':';
-      else hours = hours + ':';
-  
-      if(!minutes) minutes = '00:';
-      else if(minutes < 10)  minutes = '0' + minutes + ':';
-      else minutes = minutes + ':';
-  
-      if(!seconds) seconds = '00';
-      else if(seconds < 10) seconds = '0' + seconds;
-  
-      return hours + minutes + seconds;
-    } else {
-      if(s < 10) s = '0' + s;
-      return String('00:00:' + s);
-    }
+  toHHMMSS(s) {
+    let hours = Math.floor(s / 3600);
+    let minutes = Math.floor(s / 60) % 60;
+    let seconds = s % 60;
+
+    return [hours, minutes, seconds]
+      .map( v => v < 10 ? '0' + v : v)
+      .join(':');
   }
   //Включает таймер и обновляет состояние
   startTimer() {
@@ -50,7 +36,7 @@ class Timer extends React.Component {
 
       this.setState({
         timerSeconds: currentSeconds,
-        timerString: this.getTimerString(currentSeconds)
+        timerString: this.toHHMMSS(currentSeconds)
       });
     }, 1000)
   }
@@ -70,8 +56,11 @@ function Welcome(props) {
     <>
       <div className="welcome">
         <h2>Тренажер преобразования типов в JavaScript</h2>
-        <form>
-          <button onClick={props.handler}>Начать</button>
+        <form name="formWelcome">
+          <SelectTimer />
+          <div className="wrapperButton">
+            <button onClick={props.handler}>Начать</button>
+          </div>
         </form>
       </div>
     </>
@@ -87,7 +76,9 @@ function Goodbuy(props) {
           Вы можете попробовать снова нажав кнопку снизу.
         </p>
         <form>
-          <button onClick={props.handler}>Начать</button>
+          <div className="wrapperButton">
+            <button onClick={props.handler}>Начать</button>
+          </div>
         </form>
       </div>
       <div className="results">
@@ -111,6 +102,54 @@ function Goodbuy(props) {
         }
       </div>
     </>
+  )
+}
+
+// Создает select для установки таймера (используется в компоненте Welcome)
+function SelectTimer(props) {
+  function getOptions(n) {  /* возвращает массив option 24 для часов, 60 для минут и секунд*/
+    let options = [];
+
+    for(let i = 0; i < n; i++) {
+      let optionElement = <option key={i}>{i}</option>
+
+      options.push(optionElement);
+    }
+
+    return options;
+  } 
+
+  let lableHours = (
+    <>
+      <select name="hours" id="selectHours">
+        {getOptions(24)}
+      </select>
+      <label htmlFor="selectHours">ч</label>
+    </>
+  );
+  let lableMinutes = (
+    <>
+      <select name="minutes" id="selectMinutes">
+        {getOptions(60)}
+      </select>
+      <label htmlFor="selectMInutes">м</label>
+    </>
+  );
+  let lableSeconds = (
+    <>
+      <select name="seconds" id="selectSeconds">
+        {getOptions(60)}
+      </select>
+      <label htmlFor="selectSeconds">c</label>
+    </>
+  );
+
+  return (
+    <div className="wrapperSelect">
+      {lableHours}
+      {lableMinutes}
+      {lableSeconds}
+    </div>
   )
 }
 
@@ -185,7 +224,9 @@ class App extends React.Component {
   handleButtonStart(e) {
     this.statusApp = 'continue';
     this.correct = 0;  //сбросить счетчик правильных ответов
-    this.expressions = [];
+    this.expressions = []; //очистить массив сохраненных выражений
+    if(this.timerSeconds === undefined) 
+      this.timerSeconds = this.getTimerSeconds();
     this.makeNewExpression();
 
     e.preventDefault(); //отменить отправку формы
@@ -260,6 +301,19 @@ class App extends React.Component {
 
     this.expressions.push(e);
   }
+  /* Возвращает время таймера в секундах */
+  getTimerSeconds() {
+    let form = document.forms.formWelcome;
+
+    let hours = Number(form.hours.value);
+    let minutes = Number(form.minutes.value);
+    let seconds = Number(form.seconds.value);
+
+    seconds += (minutes * 60) + (hours * 60 * 60);
+
+    return seconds;
+  }
+
   render() {
     //'деструктуризация объекта' для упрощения обращения к переменным
     let {
@@ -282,13 +336,15 @@ class App extends React.Component {
             <span className="operandTwo">{typeof r === 'string' ? '"' + r + '"' : String(r)}</span>
           </p>
             <form>
-              <button onClick={this.handleButtonTrue}>True</button>
-              <button onClick={this.handleButtonFalse}>False</button>
+              <div className="wrapperButton">
+                <button onClick={this.handleButtonTrue}>True</button>
+                <button onClick={this.handleButtonFalse}>False</button>
+              </div>
             </form>
         </div>
         <div className="timer">
           {/* timerSeconds устанавливает таймер (секунд) */}
-          <Timer end={this.end} timerSeconds="30"/>
+          <Timer end={this.end} timerSeconds={this.timerSeconds}/>
         </div>
       </>
     );

@@ -7,7 +7,7 @@ class Timer extends React.Component {
     this.state = {
       timerSeconds: timerSeconds,
       //Количество секунд до окончания
-      timerString: this.getTimerString(timerSeconds),
+      timerString: this.toHHMMSS(timerSeconds),
       //Секунды в формате hh:mm:ss
       controlBtn: 'Start',
       //
@@ -18,19 +18,11 @@ class Timer extends React.Component {
   } //Принимает секунды. Возвращает время в формате hh:mm:ss
 
 
-  getTimerString(s) {
-    if (s > 60) {
-      let seconds = s % 60;
-      let minutes = Math.floor(s / 60);
-      let hours = Math.floor(minutes / 60);
-      if (!hours) hours = '00:';else if (hours < 10) hours = '0' + hours + ':';else hours = hours + ':';
-      if (!minutes) minutes = '00:';else if (minutes < 10) minutes = '0' + minutes + ':';else minutes = minutes + ':';
-      if (!seconds) seconds = '00';else if (seconds < 10) seconds = '0' + seconds;
-      return hours + minutes + seconds;
-    } else {
-      if (s < 10) s = '0' + s;
-      return String('00:00:' + s);
-    }
+  toHHMMSS(s) {
+    let hours = Math.floor(s / 3600);
+    let minutes = Math.floor(s / 60) % 60;
+    let seconds = s % 60;
+    return [hours, minutes, seconds].map(v => v < 10 ? '0' + v : v).join(':');
   } //Включает таймер и обновляет состояние
 
 
@@ -46,7 +38,7 @@ class Timer extends React.Component {
       let currentSeconds = this.state.timerSeconds - 1;
       this.setState({
         timerSeconds: currentSeconds,
-        timerString: this.getTimerString(currentSeconds)
+        timerString: this.toHHMMSS(currentSeconds)
       });
     }, 1000);
   }
@@ -60,17 +52,23 @@ class Timer extends React.Component {
 function Welcome(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "welcome"
-  }, /*#__PURE__*/React.createElement("h2", null, "\u0422\u0440\u0435\u043D\u0430\u0436\u0435\u0440 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0442\u0438\u043F\u043E\u0432 \u0432 JavaScript"), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("h2", null, "\u0422\u0440\u0435\u043D\u0430\u0436\u0435\u0440 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0442\u0438\u043F\u043E\u0432 \u0432 JavaScript"), /*#__PURE__*/React.createElement("form", {
+    name: "formWelcome"
+  }, /*#__PURE__*/React.createElement(SelectTimer, null), /*#__PURE__*/React.createElement("div", {
+    className: "wrapperButton"
+  }, /*#__PURE__*/React.createElement("button", {
     onClick: props.handler
-  }, "\u041D\u0430\u0447\u0430\u0442\u044C"))));
+  }, "\u041D\u0430\u0447\u0430\u0442\u044C")))));
 }
 
 function Goodbuy(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "goodbuy"
-  }, /*#__PURE__*/React.createElement("p", null, "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u0448\u043B\u043E. \u0412\u0430\u0448 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442:  ", /*#__PURE__*/React.createElement("span", null, props.correct), /*#__PURE__*/React.createElement("br", null), "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0441\u043D\u043E\u0432\u0430 \u043D\u0430\u0436\u0430\u0432 \u043A\u043D\u043E\u043F\u043A\u0443 \u0441\u043D\u0438\u0437\u0443."), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("p", null, "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u0448\u043B\u043E. \u0412\u0430\u0448 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442:  ", /*#__PURE__*/React.createElement("span", null, props.correct), /*#__PURE__*/React.createElement("br", null), "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0441\u043D\u043E\u0432\u0430 \u043D\u0430\u0436\u0430\u0432 \u043A\u043D\u043E\u043F\u043A\u0443 \u0441\u043D\u0438\u0437\u0443."), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+    className: "wrapperButton"
+  }, /*#__PURE__*/React.createElement("button", {
     onClick: props.handler
-  }, "\u041D\u0430\u0447\u0430\u0442\u044C"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u041D\u0430\u0447\u0430\u0442\u044C")))), /*#__PURE__*/React.createElement("div", {
     className: "results"
   }, props.expressions.map((e, i) => {
     return /*#__PURE__*/React.createElement("div", {
@@ -88,6 +86,45 @@ function Goodbuy(props) {
       className: "userAnswer"
     }, "\u0412\u0430\u0448 \u043E\u0442\u0432\u0435\u0442: ", /*#__PURE__*/React.createElement("b", null, String(e.userAnswer))));
   })));
+} // Создает select для установки таймера (используется в компоненте Welcome)
+
+
+function SelectTimer(props) {
+  function getOptions(n) {
+    /* возвращает массив option 24 для часов, 60 для минут и секунд*/
+    let options = [];
+
+    for (let i = 0; i < n; i++) {
+      let optionElement = /*#__PURE__*/React.createElement("option", {
+        key: i
+      }, i);
+      options.push(optionElement);
+    }
+
+    return options;
+  }
+
+  let lableHours = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("select", {
+    name: "hours",
+    id: "selectHours"
+  }, getOptions(24)), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "selectHours"
+  }, "\u0447"));
+  let lableMinutes = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("select", {
+    name: "minutes",
+    id: "selectMinutes"
+  }, getOptions(60)), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "selectMInutes"
+  }, "\u043C"));
+  let lableSeconds = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("select", {
+    name: "seconds",
+    id: "selectSeconds"
+  }, getOptions(60)), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "selectSeconds"
+  }, "c"));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "wrapperSelect"
+  }, lableHours, lableMinutes, lableSeconds);
 }
 
 class App extends React.Component {
@@ -148,7 +185,9 @@ class App extends React.Component {
     this.statusApp = 'continue';
     this.correct = 0; //сбросить счетчик правильных ответов
 
-    this.expressions = [];
+    this.expressions = []; //очистить массив сохраненных выражений
+
+    if (this.timerSeconds === undefined) this.timerSeconds = this.getTimerSeconds();
     this.makeNewExpression();
     e.preventDefault(); //отменить отправку формы
   } //=====  Methods  =====
@@ -229,6 +268,17 @@ class App extends React.Component {
     };
     this.expressions.push(e);
   }
+  /* Возвращает время таймера в секундах */
+
+
+  getTimerSeconds() {
+    let form = document.forms.formWelcome;
+    let hours = Number(form.hours.value);
+    let minutes = Number(form.minutes.value);
+    let seconds = Number(form.seconds.value);
+    seconds += minutes * 60 + hours * 60 * 60;
+    return seconds;
+  }
 
   render() {
     //'деструктуризация объекта' для упрощения обращения к переменным
@@ -252,15 +302,17 @@ class App extends React.Component {
       className: "operator"
     }, String(o)), /*#__PURE__*/React.createElement("span", {
       className: "operandTwo"
-    }, typeof r === 'string' ? '"' + r + '"' : String(r))), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("button", {
+    }, typeof r === 'string' ? '"' + r + '"' : String(r))), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+      className: "wrapperButton"
+    }, /*#__PURE__*/React.createElement("button", {
       onClick: this.handleButtonTrue
     }, "True"), /*#__PURE__*/React.createElement("button", {
       onClick: this.handleButtonFalse
-    }, "False"))), /*#__PURE__*/React.createElement("div", {
+    }, "False")))), /*#__PURE__*/React.createElement("div", {
       className: "timer"
     }, /*#__PURE__*/React.createElement(Timer, {
       end: this.end,
-      timerSeconds: "5"
+      timerSeconds: this.timerSeconds
     }))); //хранит элемент-React который будет выведен в конце работы приложения
 
     let endApp = /*#__PURE__*/React.createElement(Goodbuy, {
