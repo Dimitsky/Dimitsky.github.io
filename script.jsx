@@ -43,9 +43,9 @@ class Timer extends React.Component {
   render() {
     return (
       <>
-        <p>
+        <div className="timer">
           {this.state.timerString}
-        </p>
+        </div>
       </>
     )
   }
@@ -54,14 +54,12 @@ class Timer extends React.Component {
 function Welcome(props) {
   return (
     <>
-      <div className="welcome">
+      <div className="wrapper item welcome">
         <h2>Тренажер преобразования типов в JavaScript</h2>
-        <form name="formWelcome">
-          <SelectTimer />
-          <div className="wrapperButton">
-            <button onClick={props.handler}>Начать</button>
-          </div>
-        </form>
+        <SelectTimer />
+        <div className="wrapper interface">
+          <button onClick={props.handler} className="button">Старт</button>
+        </div>
       </div>
     </>
   )
@@ -70,32 +68,30 @@ function Welcome(props) {
 function Goodbuy(props) {
   return (
     <>
-      <div className="goodbuy">
+      <div className="wrapper item">
         <p>
           Время вышло. Ваш результат:  <span>{props.correct}</span><br />
           Вы можете попробовать снова нажав кнопку снизу.
         </p>
-        <form>
-          <div className="wrapperButton">
-            <button onClick={props.handler}>Начать</button>
-          </div>
-        </form>
+        <div className="wrapper interface">
+          <button onClick={props.handler} className="button">Старт</button>
+        </div>
       </div>
-      <div className="results">
+      <div className="wrapper item results">
         {/* вывести все ответы пользователя */}
         {
           props.expressions.map( (e, i) => {
             return (
               <div className={e.isCorrectUserAnswer ? 'correct' : 'incorrect'} key={i}>
-                <p className="expression">
+                <div className="wrapper expression">
                   {/* чтобы было видно отличие строки от других типов данных */}
                   <span className="operandOne">{typeof e.l === 'string' ? '"' + e.l + '"' : String(e.l)}</span>
                   <span className="operator">{String(e.o)}</span>
                   <span className="operandTwo">{typeof e.r === 'string' ? '"' + e.r + '"' : String(e.r)}</span>
-                </p>
-                <p className="userAnswer">
-                  Ваш ответ: <b>{String(e.userAnswer)}</b>
-                </p>
+                </div>
+                <div className="wrapper userAnswer">
+                  <span>Ваш ответ: <b>{String(e.userAnswer)}</b></span>
+                </div>
               </div>
             )
           })
@@ -145,10 +141,12 @@ function SelectTimer(props) {
   );
 
   return (
-    <div className="wrapperSelect">
-      {lableHours}
-      {lableMinutes}
-      {lableSeconds}
+    <div className="wrapper select">
+      <form name="formWelcome">
+        {lableHours}
+        {lableMinutes}
+        {lableSeconds}
+      </form>
     </div>
   )
 }
@@ -329,22 +327,20 @@ class App extends React.Component {
     //хранит элемент-React который будет показывать пользователю созданные выражения
     let continueApp = (
       <>
-        <div className="continue">
-          <p className="expression">
+        <div className="wrapper item">
+          {/* timerSeconds устанавливает таймер (секунд) */}
+          <Timer end={this.end} timerSeconds={this.timerSeconds}/>
+        </div>
+        <div className="wrapper item">
+          <div className="wrapper expression">
             <span className="operandOne">{typeof l === 'string' ? '"' + l + '"' : String(l)}</span>
             <span className="operator">{String(o)}</span>
             <span className="operandTwo">{typeof r === 'string' ? '"' + r + '"' : String(r)}</span>
-          </p>
-            <form>
-              <div className="wrapperButton">
-                <button onClick={this.handleButtonTrue}>True</button>
-                <button onClick={this.handleButtonFalse}>False</button>
-              </div>
-            </form>
-        </div>
-        <div className="timer">
-          {/* timerSeconds устанавливает таймер (секунд) */}
-          <Timer end={this.end} timerSeconds={this.timerSeconds}/>
+          </div>
+            <div className="wrapper interface">
+              <button onClick={this.handleButtonTrue} className="button">True</button>
+              <button onClick={this.handleButtonFalse} className="button">False</button>
+            </div>
         </div>
       </>
     );

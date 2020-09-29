@@ -44,47 +44,49 @@ class Timer extends React.Component {
   }
 
   render() {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, this.state.timerString));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "timer"
+    }, this.state.timerString));
   }
 
 }
 
 function Welcome(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "welcome"
-  }, /*#__PURE__*/React.createElement("h2", null, "\u0422\u0440\u0435\u043D\u0430\u0436\u0435\u0440 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0442\u0438\u043F\u043E\u0432 \u0432 JavaScript"), /*#__PURE__*/React.createElement("form", {
-    name: "formWelcome"
-  }, /*#__PURE__*/React.createElement(SelectTimer, null), /*#__PURE__*/React.createElement("div", {
-    className: "wrapperButton"
+    className: "wrapper item welcome"
+  }, /*#__PURE__*/React.createElement("h2", null, "\u0422\u0440\u0435\u043D\u0430\u0436\u0435\u0440 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0442\u0438\u043F\u043E\u0432 \u0432 JavaScript"), /*#__PURE__*/React.createElement(SelectTimer, null), /*#__PURE__*/React.createElement("div", {
+    className: "wrapper interface"
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: props.handler
-  }, "\u041D\u0430\u0447\u0430\u0442\u044C")))));
+    onClick: props.handler,
+    className: "button"
+  }, "\u0421\u0442\u0430\u0440\u0442"))));
 }
 
 function Goodbuy(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "goodbuy"
-  }, /*#__PURE__*/React.createElement("p", null, "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u0448\u043B\u043E. \u0412\u0430\u0448 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442:  ", /*#__PURE__*/React.createElement("span", null, props.correct), /*#__PURE__*/React.createElement("br", null), "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0441\u043D\u043E\u0432\u0430 \u043D\u0430\u0436\u0430\u0432 \u043A\u043D\u043E\u043F\u043A\u0443 \u0441\u043D\u0438\u0437\u0443."), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
-    className: "wrapperButton"
+    className: "wrapper item"
+  }, /*#__PURE__*/React.createElement("p", null, "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u0448\u043B\u043E. \u0412\u0430\u0448 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442:  ", /*#__PURE__*/React.createElement("span", null, props.correct), /*#__PURE__*/React.createElement("br", null), "\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0441\u043D\u043E\u0432\u0430 \u043D\u0430\u0436\u0430\u0432 \u043A\u043D\u043E\u043F\u043A\u0443 \u0441\u043D\u0438\u0437\u0443."), /*#__PURE__*/React.createElement("div", {
+    className: "wrapper interface"
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: props.handler
-  }, "\u041D\u0430\u0447\u0430\u0442\u044C")))), /*#__PURE__*/React.createElement("div", {
-    className: "results"
+    onClick: props.handler,
+    className: "button"
+  }, "\u0421\u0442\u0430\u0440\u0442"))), /*#__PURE__*/React.createElement("div", {
+    className: "wrapper item results"
   }, props.expressions.map((e, i) => {
     return /*#__PURE__*/React.createElement("div", {
       className: e.isCorrectUserAnswer ? 'correct' : 'incorrect',
       key: i
-    }, /*#__PURE__*/React.createElement("p", {
-      className: "expression"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "wrapper expression"
     }, /*#__PURE__*/React.createElement("span", {
       className: "operandOne"
     }, typeof e.l === 'string' ? '"' + e.l + '"' : String(e.l)), /*#__PURE__*/React.createElement("span", {
       className: "operator"
     }, String(e.o)), /*#__PURE__*/React.createElement("span", {
       className: "operandTwo"
-    }, typeof e.r === 'string' ? '"' + e.r + '"' : String(e.r))), /*#__PURE__*/React.createElement("p", {
-      className: "userAnswer"
-    }, "\u0412\u0430\u0448 \u043E\u0442\u0432\u0435\u0442: ", /*#__PURE__*/React.createElement("b", null, String(e.userAnswer))));
+    }, typeof e.r === 'string' ? '"' + e.r + '"' : String(e.r))), /*#__PURE__*/React.createElement("div", {
+      className: "wrapper userAnswer"
+    }, /*#__PURE__*/React.createElement("span", null, "\u0412\u0430\u0448 \u043E\u0442\u0432\u0435\u0442: ", /*#__PURE__*/React.createElement("b", null, String(e.userAnswer)))));
   })));
 } // Создает select для установки таймера (используется в компоненте Welcome)
 
@@ -123,8 +125,10 @@ function SelectTimer(props) {
     htmlFor: "selectSeconds"
   }, "c"));
   return /*#__PURE__*/React.createElement("div", {
-    className: "wrapperSelect"
-  }, lableHours, lableMinutes, lableSeconds);
+    className: "wrapper select"
+  }, /*#__PURE__*/React.createElement("form", {
+    name: "formWelcome"
+  }, lableHours, lableMinutes, lableSeconds));
 }
 
 class App extends React.Component {
@@ -293,27 +297,29 @@ class App extends React.Component {
     }); //хранит элемент-React который будет показывать пользователю созданные выражения
 
     let continueApp = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      className: "continue"
-    }, /*#__PURE__*/React.createElement("p", {
-      className: "expression"
+      className: "wrapper item"
+    }, /*#__PURE__*/React.createElement(Timer, {
+      end: this.end,
+      timerSeconds: this.timerSeconds
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "wrapper item"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "wrapper expression"
     }, /*#__PURE__*/React.createElement("span", {
       className: "operandOne"
     }, typeof l === 'string' ? '"' + l + '"' : String(l)), /*#__PURE__*/React.createElement("span", {
       className: "operator"
     }, String(o)), /*#__PURE__*/React.createElement("span", {
       className: "operandTwo"
-    }, typeof r === 'string' ? '"' + r + '"' : String(r))), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
-      className: "wrapperButton"
+    }, typeof r === 'string' ? '"' + r + '"' : String(r))), /*#__PURE__*/React.createElement("div", {
+      className: "wrapper interface"
     }, /*#__PURE__*/React.createElement("button", {
-      onClick: this.handleButtonTrue
+      onClick: this.handleButtonTrue,
+      className: "button"
     }, "True"), /*#__PURE__*/React.createElement("button", {
-      onClick: this.handleButtonFalse
-    }, "False")))), /*#__PURE__*/React.createElement("div", {
-      className: "timer"
-    }, /*#__PURE__*/React.createElement(Timer, {
-      end: this.end,
-      timerSeconds: this.timerSeconds
-    }))); //хранит элемент-React который будет выведен в конце работы приложения
+      onClick: this.handleButtonFalse,
+      className: "button"
+    }, "False")))); //хранит элемент-React который будет выведен в конце работы приложения
 
     let endApp = /*#__PURE__*/React.createElement(Goodbuy, {
       handler: this.handleButtonStart,

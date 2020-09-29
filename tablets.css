@@ -1,15 +1,36 @@
-.wrapper {
-  flex-flow: column wrap;
-  margin: auto;
-  max-width: auto;
+body {
+  margin: 1rem;
+}
+/* WRAPPERS */
+.wrapper.container {
+  max-width: 100%;
 }
 
-.wrapper .timer {
-  margin: 1rem 0 0 0;
-  position: static;
+.wrapper.item {
+  padding: 1rem;
 }
 
-.timer p {
-  position: static;
-  transform: none;
+.wrapper + .wrapper {
+  margin-top: 1rem;
+}
+
+.wrapper.interface {
+  margin-top: 1rem;
+}
+
+/* BUTTONS */
+.button {
+  font-size: 1rem;
+  height: 4.5em;
+  width: 4.5em;
+}
+
+/* RESULTS */
+.correct,
+.incorrect {
+  padding: 1rem;
+}
+
+.results div + div {
+  margin-top: 1rem;
 }

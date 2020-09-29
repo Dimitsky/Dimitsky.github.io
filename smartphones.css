@@ -1,14 +1,36 @@
-.wrapper {
-  display: block;
+body {
+  margin: .5rem;
+}
+/* WRAPPERS */
+.wrapper + .wrapper {
+  margin-top: .5rem;
 }
 
-.wrapper .timer {
-  border-top: 2px solid #f3f3f3;
-  margin: 0;
-  position: static;
+.wrapper.item {
+  padding: 1rem;
 }
 
-.wrapper .results {
-  border-top: 2px solid #f3f3f3;
-  margin: 0;
+.wrapper.interface {
+  margin-top: 1rem;
+}
+
+/* EXPRESSION */
+.expression {
+  flex-direction: column;
+}
+.operandOne {
+  text-align: center;
+}
+
+.operator {
+  text-align: center;
+}
+
+.operandTwo {
+  text-align: center;
+}
+
+/* BUTTONS */
+.button {
+  font-size: 1rem;
 }
