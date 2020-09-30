@@ -195,7 +195,7 @@ class App extends React.Component {
 
   end() {
     this.statusApp = 'end';
-    this.setState({}); //Фиктивный вызов обновления состояния для обновления пользовательского интерфейса после окончания таймера
+    this.setState({}); //Вызов фиктивного обновления состояния для обновления пользовательского интерфейса после окончания таймера
   } //Получить случайный индекс для выбора операндов и оператора
 
 
@@ -247,8 +247,6 @@ class App extends React.Component {
     let rightOperand = this.getOperand();
     let operator = this.getOperator();
     let result = this.getResult(leftOperand, rightOperand, operator); //'короткие свойства' для упращения записи свойств
-
-    console.log(leftOperand + ' ' + operator + ' ' + rightOperand + ' result: ' + result);
 
     this.setState({
       leftOperand,
