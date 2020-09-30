@@ -184,12 +184,8 @@ class App extends React.Component {
     this.handleButtonFalse = this.handleButtonFalse.bind(this); //
     this.handleButtonStart = this.handleButtonStart.bind(this); //
 
-    this.end = this.end.bind(this); //будет передат дочернему компоненту, чтобы он мог дать сигнал родительскому компоненту
+    this.end = this.end.bind(this); //будет передан дочернему компоненту, чтобы он мог дать сигнал родительскому компоненту
 
-  }
-  //=====  lifecycle  =====
-  componentDidMount() {
-    this.makeNewExpression();
   }
   //=====  Handlers  =====
   handleButtonTrue(e) {
@@ -233,7 +229,7 @@ class App extends React.Component {
   //Завершает работу тренажера (его нужно привязать к этому компоненту и передать дочернему)
   end() {
     this.statusApp = 'end';
-    this.makeNewExpression();
+    this.setState({});  //Фиктивный вызов обновления состояния для обновления пользовательского интерфейса после окончания таймера
   }
   //Получить случайный индекс для выбора операндов и оператора
   getRandomIndex(min, max) {
